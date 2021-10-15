@@ -29,6 +29,6 @@ pip install -r requirements.txt
 ### Conda
 
 ```
-conda create --name bonk -f reqirements.txt
+conda create --name bonk -f requirements.txt
 conda activate bonk
 ```
