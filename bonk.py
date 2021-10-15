@@ -93,6 +93,14 @@ def write_table(table: Iterable[Record], output: Path):
         fd.writelines(map(Bonkfig.separator.join, map(record_to_row, table)))
 
 
+def find_substrings(string, substring):
+    length = len(substring)
+    for i in range(len(string)):
+        kmer = string[i:i+length]
+        if kmer == substring:
+            yield Record(None, i, i+length, None, substring)
+
+
 def main(args):
     pass
 

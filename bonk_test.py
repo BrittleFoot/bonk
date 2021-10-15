@@ -47,6 +47,11 @@ def test_write_fasta(tmp_file: Path):
     assert header == bonk.HEADER
     assert rec == example
     
+def test_find_substrings():
+    find_result = list(bonk.find_substrings('AA', 'A'))
+    r1, r2 = find_result
+    assert r1.start == 0
+    assert r2.start == 1
 
 if __name__ == '__main__':
     pytest.main(['-s'])
