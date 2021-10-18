@@ -19,16 +19,12 @@ Output example ([bed](https://m.ensembl.org/info/website/upload/bed.html) format
 
 ## Installation
 
-### Venv
-```
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
 ### Conda
 
 ```
-conda create --name bonk -f requirements.txt
+conda create --name bonk --file requirements.txt
 conda activate bonk
+
+# To test script
+pip install pytest
 ```
