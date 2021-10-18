@@ -22,9 +22,7 @@ Output example ([bed](https://m.ensembl.org/info/website/upload/bed.html) format
 ### Conda
 
 ```
-conda create --name bonk --file requirements.txt
+conda create --name bonk python=3.10
 conda activate bonk
-
-# To test script
-pip install pytest
+pip install -r requirements.txt
 ```

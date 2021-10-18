@@ -5,8 +5,9 @@ from sys import stdout
 from typing import Iterable
 from pathlib import Path
 from itertools import chain
-from dataclasses import astuple
-from dataclasses import dataclass
+
+from record import Record
+from algorithms import best_algorithm, installed
 
 
 HEADER = [
@@ -31,22 +32,6 @@ class Bonkfig:
     @staticmethod
     def postprocess_args(args):
         Bonkfig.separator = args.separator
-
-
-@dataclass
-class Record:
-    chr: str
-    start: int
-    end: int
-    strand: str
-    sequence: str
-
-    def __post_init__(self):
-        self.start = int(self.start)
-        self.end = int(self.end)
-
-    def __iter__(self):
-        return iter(astuple(self))
 
 
 def reverse(seq: str) -> str:
@@ -117,8 +102,9 @@ def find_substrings(string, substring):
             yield Record(None, i, i+length, None, substring)
 
 
-def find_positive_strand(string, substring, chr):
-    for record in find_substrings(string, substring):
+def find_positive_strand(string, args, chr):
+    algorithm = installed[args.algorithm]
+    for record in algorithm(string, args.sequence):
         record.start += 1
         record.end += 1
         record.chr = chr
@@ -126,8 +112,9 @@ def find_positive_strand(string, substring, chr):
         yield record
 
 
-def find_negative_strand(string, substring, chr):
-    for record in find_substrings(complement(reverse(string)), substring):
+def find_negative_strand(string, args, chr):
+    algorithm = installed[args.algorithm]
+    for record in algorithm(complement(reverse(string)), args.sequence):
         start = record.start
         end = record.end
 
@@ -150,8 +137,8 @@ def main(args):
     records = read_fasta(args.fasta)
     output = []
     for record in records:
-        finds = find_positive_strand(record.sequence, args.sequence, record.chr)
-        reverse_finds = find_negative_strand(record.sequence, args.sequence, record.chr)
+        finds = find_positive_strand(record.sequence, args, record.chr)
+        reverse_finds = find_negative_strand(record.sequence, args, record.chr)
         output = chain(output, finds, reverse_finds)
 
     write_table(output, args.output)
@@ -163,6 +150,7 @@ def parse_args(init=None):
     parser.add_argument('-s', '--sequence', required=True)
     parser.add_argument('-o', '--output', required=True)
     parser.add_argument('--separator', default='\t')
+    parser.add_argument('--algorithm', choices=installed.keys(), default=best_algorithm())
 
     return parser.parse_args(init)
 

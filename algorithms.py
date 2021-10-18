@@ -10,7 +10,6 @@ def find_substrings(string, substring) -> list[Record]:
             yield Record(None, i, i+length, None, substring)
 
 
-
 installed = dict(basic=find_substrings)
 
 
@@ -21,8 +20,13 @@ try:
 
 except ModuleNotFoundError:
     pass
+
+
+def best_algorithm():
+    if 'ahocorasic' in installed:
+        return 'ahocorasic'
+
+    return 'basic'
     
-
-
 
 __all__ = ['installed']

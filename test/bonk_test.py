@@ -10,6 +10,7 @@ AAAAAAAAA
 TTTTTTTTT
 """
 
+
 @pytest.fixture
 def tmp_file(tmp_path: Path) -> Path:
     tmp_path.mkdir(parents=True, exist_ok=True)
@@ -26,6 +27,7 @@ def tmp_fasta(tmp_path: Path) -> Path:
 
     yield tmp_file
 
+
 def test_read_fasta(tmp_fasta: Path):
     fasta = bonk.read_fasta(tmp_fasta)
 
@@ -33,6 +35,7 @@ def test_read_fasta(tmp_fasta: Path):
 
     assert a.chr == 'a'
     assert b.chr == 'b'
+
 
 def test_write_fasta(tmp_file: Path):
     example = bonk.Record('a', 0, 1, '+', 'HELLO')
@@ -45,7 +48,8 @@ def test_write_fasta(tmp_file: Path):
 
     assert header == bonk.HEADER
     assert rec == example
-    
+
+
 def test_find_substrings():
     find_result = list(bonk.find_substrings('AA', 'A'))
     r1, r2 = find_result
