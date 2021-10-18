@@ -1,6 +1,6 @@
 # BONK
 
-Tool, which takes for input fasta file and some nucleotide/aminoacid substring (`ATGCGCTTA` for example) and outputs all positions of the substring in genome in a tab-separated file.
+Tool, which takes a fasta file and some nucleotide/aminoacid substring (`ATGCGCTTA` for example) as an input and outputs all positions of the substring in genome in a tab-separated file.
 
 
 ## Usage example:
