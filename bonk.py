@@ -1,7 +1,9 @@
 import argparse
+from os import read
 
 from typing import Iterable
 from pathlib import Path
+from itertools import chain
 from dataclasses import astuple
 from dataclasses import dataclass
 
@@ -90,7 +92,8 @@ def write_table(table: Iterable[Record], output: Path):
 
     with output.open('w') as fd:
         print(Bonkfig.separator.join(HEADER), file=fd)
-        fd.writelines(map(Bonkfig.separator.join, map(record_to_row, table)))
+        strings = map(Bonkfig.separator.join, map(record_to_row, table))
+        print('\n'.join(strings), file=fd)
 
 
 def find_substrings(string, substring):
@@ -98,17 +101,44 @@ def find_substrings(string, substring):
     for i in range(len(string)):
         kmer = string[i:i+length]
         if kmer == substring:
-            yield Record(None, i, i+length, None, substring)
+            yield Record(None, i+1, i+length, None, substring)
+
+
+def find_positive_strand(string, substring, chr):
+    for record in find_substrings(string, substring):
+        record.chr = chr
+        record.strand = '+'
+        yield record
+
+
+def find_negative_strand(string, substring, chr):
+    for record in find_substrings(complement(reverse(string)), substring):
+        record.chr = chr
+        record.strand = '-'
+        yield record
 
 
 def main(args):
-    pass
+    """
+    read_fasta
+    find_substrings
+    reverse
+    find_substrings
+    write_table
+    """
+    records = read_fasta(args.fasta)
+    output = []
+    for record in records:
+        finds = find_positive_strand(record.sequence, args.sequence, record.chr)
+        reverse_finds = find_negative_strand(record.sequence, args.sequence, record.chr)
+        output = chain(output, finds, reverse_finds)
+    write_table(output, args.output)
 
 
 def parse_args(init=None):
     parser = argparse.ArgumentParser('bonk')
     parser.add_argument('-s', '--sequence')
-    parser.add_argument('-o', '--output')
+    parser.add_argument('-o', '--output', type=Path)
     parser.add_argument('-v', '--verboose', action='store_true')
     parser.add_argument('-a', '--fasta', type=Path)
     parser.add_argument('--separator', default='\t')
