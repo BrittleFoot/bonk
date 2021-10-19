@@ -65,7 +65,11 @@ def parse_args(init=None):
     return parser.parse_args(init)
 
 
-if __name__ == '__main__':
+def run_app():
     args = parse_args()
     Bonkfig.postprocess_args(args)
     main(args)
+
+
+if __name__ == '__main__':
+    run_app()
