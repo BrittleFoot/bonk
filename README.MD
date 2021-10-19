@@ -15,6 +15,11 @@ conda activate bonk
 ```sh
 pip install .
 ```
+#### Development
+To install in development mode use `-e` flag. Package will use `src` directory thus allowing to edit installed package without need to reinstall on change.
+```sh
+pip install -e .
+```
 
 ### Testing
 
