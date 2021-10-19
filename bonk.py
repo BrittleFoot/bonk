@@ -1,4 +1,6 @@
+#! python
 import argparse
+
 from os import read
 from sys import stdout
 

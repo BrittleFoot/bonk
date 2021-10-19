@@ -6,7 +6,7 @@ Tool, which takes for input fasta file and some nucleotide/aminoacid substring (
 ## Usage example:
 
 ```sh
-genome_substring.py -a /path/to/genome.fasta -s ATGCGCTTA -o /path/to/output.bed
+python bonk.py -a /path/to/genome.fasta -s ATGCGCTTA -o /path/to/output.bed
 ```
 
 Output example ([bed](https://m.ensembl.org/info/website/upload/bed.html) format) :
@@ -22,7 +22,7 @@ Output example ([bed](https://m.ensembl.org/info/website/upload/bed.html) format
 ### Conda
 
 ```
-conda create --name bonk python=3.10
+conda create -y --name bonk python=3.10
 conda activate bonk
 pip install -r requirements.txt
 ```
