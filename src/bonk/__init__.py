@@ -1,5 +1,17 @@
 from dataclasses import astuple, dataclass
 
+from bonk.algorithms import best_algorithm
+
+
+class Bonkfig:
+    separator = '\t'
+    algorithm = best_algorithm()
+
+    @staticmethod
+    def postprocess_args(args):
+        Bonkfig.separator = args.separator
+        Bonkfig.algorithm = args.algorithm
+
 
 @dataclass
 class Record:

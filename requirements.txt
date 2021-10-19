@@ -1,2 +1,1 @@
-pytest
-pyahocorasick
+pyahocorasick==1.4.2

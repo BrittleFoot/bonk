@@ -1,7 +1,11 @@
 import pytest
-from .. import bonk
 
 from pathlib import Path
+
+from bonk import io as bonkio
+from bonk import Bonkfig
+from bonk import Record
+from bonk.algorithms import installed as installed_algorithms
 
 
 CONTENT = """> a
@@ -29,7 +33,7 @@ def tmp_fasta(tmp_path: Path) -> Path:
 
 
 def test_read_fasta(tmp_fasta: Path):
-    fasta = bonk.read_fasta(tmp_fasta)
+    fasta = bonkio.read_fasta(tmp_fasta)
 
     a, b = fasta
 
@@ -38,23 +42,24 @@ def test_read_fasta(tmp_fasta: Path):
 
 
 def test_write_fasta(tmp_file: Path):
-    example = bonk.Record('a', 0, 1, '+', 'HELLO')
+    example = Record('a', 0, 1, '+', 'HELLO')
 
-    bonk.write_table([example], tmp_file)
+    bonkio.write_table([example], tmp_file)
 
     with tmp_file.open('r') as fd:
-        header = list(map(str.strip, next(fd).split(bonk.Bonkfig.separator)))
-        rec = bonk.Record(*map(str.strip, next(fd).split(bonk.Bonkfig.separator)))
+        header = list(map(str.strip, next(fd).split(Bonkfig.separator)))
+        rec = Record(*map(str.strip, next(fd).split(Bonkfig.separator)))
 
-    assert header == bonk.HEADER
+    assert header == bonkio.HEADER
     assert rec == example
 
 
-def test_find_substrings():
-    find_result = list(bonk.find_substrings('AA', 'A'))
+@pytest.mark.parametrize('algo', installed_algorithms.values())
+def test_find_substrings(algo):
+    find_result = list(algo('AA', 'A'))
     r1, r2 = find_result
-    assert r1.start == 0
-    assert r2.start == 1
+    assert r1 == 0
+    assert r2 == 1
 
 
 if __name__ == '__main__':
