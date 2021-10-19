@@ -9,5 +9,6 @@ def aho_find_substrings(string, substring) -> IntGenerator:
     automaton.add_word(substring, (0, substring))
     automaton.make_automaton()
 
-    for i, _ in automaton.iter(string):
-        yield i
+    slen = len(substring)
+    for end_index, _ in automaton.iter(string):
+        yield end_index - slen + 1
