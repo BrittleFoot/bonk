@@ -75,14 +75,11 @@ def read_fasta(file_path: Path) -> Iterable[Record]:
 
 
 def write_table(table: Iterable[Record], output: str):
-    def record_to_row(r): 
-        return map(str, r)
-
     if output == '-':
         _write_table(table, stdout)
         return
 
-    with output.open('w') as fd:
+    with open(output, 'w') as fd:
         _write_table(table, fd)
         
 
