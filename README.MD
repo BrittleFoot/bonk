@@ -34,10 +34,14 @@ pip install -r requirements_dev.txt
 pytest
 ```
 
-## Usage:
+# Usage:
 ```sh
-python -m bonk -a /path/to/genome.fasta -s ATGCGCTTA -o /path/to/output.bed
+bonk --help
 ```
+```sh
+bonk -a /path/to/genome.fasta -s ATGCGCTTA -o /path/to/output.bed
+```
+note: you can specify `-` as an `-o` argument to perform output to stdout
 
 Output example ([bed](https://m.ensembl.org/info/website/upload/bed.html) format) :
 
