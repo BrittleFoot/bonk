@@ -8,7 +8,7 @@ Tool, which takes a fasta file and some nucleotide/aminoacid substring (`ATGCGCT
 
 ### Install python>=3.10
 I suggest to use conda virtual env
-```sh
+```shell
 conda create -y --name bonk python=3.10
 conda activate bonk
 ```
@@ -16,6 +16,22 @@ conda activate bonk
 ### Install package
 ```sh
 pip install .
+```
+
+### Testing
+
+#### Using TOX
+
+```sh
+pip install tox
+tox
+```
+
+#### Using pytest
+
+```sh
+pip install -r requirements_dev.txt
+pytest
 ```
 
 ## Usage:
