@@ -1,6 +1,6 @@
 # BONK 
 
-![Tests](https://github.com/BrittleFoot/bonk/blob/master/.github/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/BrittleFoot/bonk/actions/workflows/tests.yml/badge.svg)
 
 Tool, which takes a fasta file and some nucleotide/aminoacid substring (`ATGCGCTTA` for example) as an input and outputs all positions of the substring in genome in a tab-separated file.
 
