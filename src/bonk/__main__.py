@@ -43,12 +43,12 @@ def main(args):
     records = read_fasta(args.fasta)
     output = []
     for record in records:
-        output = chain(output,
-                       find_positive_strand(
-                           record.sequence, args.sequence, record.chr),
-                       find_negative_strand(
-                           record.sequence, args.sequence, record.chr)
-                       )
+        seq = record.sequence.upper()
+        output = chain(
+            output,
+            find_positive_strand(seq, args.sequence, record.chr),
+            find_negative_strand(seq, args.sequence, record.chr)
+        )
 
     write_table(output, args.output)
 
